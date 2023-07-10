@@ -12,11 +12,14 @@ import 'package:flutter/widgets.dart';
 class $AssetsLottieGen {
   const $AssetsLottieGen();
 
+  /// File path: assets/lottie/loading_dots.json
+  String get loadingDots => 'assets/lottie/loading_dots.json';
+
   /// File path: assets/lottie/plasma.json
   String get plasma => 'assets/lottie/plasma.json';
 
   /// List of all assets
-  List<String> get values => [plasma];
+  List<String> get values => [loadingDots, plasma];
 }
 
 class Assets {

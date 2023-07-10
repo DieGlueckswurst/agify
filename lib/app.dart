@@ -1,7 +1,7 @@
 import 'package:agify/constants/palette.dart';
 import 'package:agify/gen/fonts.gen.dart';
 import 'package:agify/shared_utils/color_service.dart';
-import 'package:agify/views/home/home_view.dart';
+import 'package:agify/ui/views/home/home_view.dart';
 import 'package:flutter/material.dart';
 
 class App extends StatefulWidget {
@@ -21,7 +21,7 @@ class _AppState extends State<App> {
         primarySwatch: ColorService.createMaterialColor(
           Palette.black,
         ),
-        scaffoldBackgroundColor: Palette.beige,
+        scaffoldBackgroundColor: Palette.brown,
       ),
       home: const HomeView(),
     );
