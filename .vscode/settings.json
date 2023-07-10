@@ -1,0 +1,18 @@
+{
+    "java.configuration.updateBuildConfiguration": "interactive",
+
+    "dart.flutterSdkPaths": ["/Users/christiankonnerth/fvm/versions"],
+    // Remove .fvm files from search
+    "search.exclude": {
+      "**/.fvm": true
+    },
+    // Remove from file watching
+    "files.watcherExclude": {
+      "**/.fvm": true
+    },
+    
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true
+    },
+    "dart.flutterSdkPath": "/Users/christiankonnerth/fvm/versions/3.10.5",
+  }
