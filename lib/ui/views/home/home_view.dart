@@ -1,8 +1,11 @@
 import 'package:agify/constants/palette.dart';
 import 'package:agify/constants/text_styles.dart';
+import 'package:agify/data/backend/agify/agify_api.dart';
+import 'package:agify/data/backend/api_base.dart/api_client.dart';
 import 'package:agify/gen/assets.gen.dart';
 import 'package:agify/ui/shared_widgets/buttons/rounded_corner_text_button.dart';
 import 'package:agify/ui/shared_widgets/text_field_with_rounded_border.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -96,7 +99,16 @@ class _HomeViewState extends State<HomeView> {
                       width: 200,
                       title: 'Bestätigen',
                       isEnabled: true,
-                      onTap: () {},
+                      onTap: () async {
+                        int age = await AgifyApi(
+                          apiClient: ApiClient(client: Dio()),
+                        ).getAgeFromName(
+                          name: 'Tom',
+                          countryCode:
+                              Localizations.localeOf(context).countryCode,
+                        );
+                        print(age);
+                      },
                     ),
                   ),
                 ],
