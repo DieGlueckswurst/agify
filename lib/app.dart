@@ -1,29 +1,47 @@
 import 'package:agify/constants/palette.dart';
+import 'package:agify/data/backend/agify/agify_api.dart';
 import 'package:agify/gen/fonts.gen.dart';
 import 'package:agify/shared_utils/color_service.dart';
+import 'package:agify/ui/views/home/cubit/home_cubit.dart';
 import 'package:agify/ui/views/home/home_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class App extends StatefulWidget {
-  const App({super.key});
+class App extends StatelessWidget {
+  final AgifyApi agifyApi;
+  const App({
+    required this.agifyApi,
+    super.key,
+  });
 
-  @override
-  State<App> createState() => _AppState();
-}
-
-class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'agify',
-      theme: ThemeData(
-        fontFamily: FontFamily.roboto,
-        primarySwatch: ColorService.createMaterialColor(
-          Palette.black,
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider.value(
+          value: agifyApi,
         ),
-        scaffoldBackgroundColor: Palette.brown,
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (_) => HomeCubit(
+              agifyApi: context.read<AgifyApi>(),
+            ),
+          ),
+        ],
+        child: MaterialApp(
+          title: 'agify',
+          theme: ThemeData(
+            fontFamily: FontFamily.roboto,
+            primarySwatch: ColorService.createMaterialColor(
+              Palette.black,
+            ),
+            scaffoldBackgroundColor: Palette.brown,
+          ),
+          home: const HomeView(),
+        ),
       ),
-      home: const HomeView(),
     );
   }
 }
