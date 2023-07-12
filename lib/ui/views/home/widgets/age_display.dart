@@ -1,3 +1,4 @@
+import 'package:animated_digit/animated_digit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -13,6 +14,9 @@ class AgeDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
+      buildWhen: (previous, current) {
+        return previous != current;
+      },
       builder: (context, state) {
         return Stack(
           alignment: Alignment.center,
@@ -20,36 +24,116 @@ class AgeDisplay extends StatelessWidget {
             LottieBuilder.asset(
               Assets.lottie.plasma,
               animate: true,
+              repeat: _getAnimate(state),
               height: 150,
             ),
             Column(
               children: [
-                Text(
-                  'Du bist',
-                  style: AppTextStyles.robotoH5SemiBold.copyWith(
-                    color: Palette.beige,
+                AnimatedOpacity(
+                  duration: kThemeAnimationDuration,
+                  opacity: _getOpacity(state),
+                  child: Text(
+                    'Du bist',
+                    style: AppTextStyles.robotoH5SemiBold.copyWith(
+                      color: Palette.beige,
+                    ),
                   ),
                 ),
                 const SizedBox(
                   height: 40,
                 ),
-                Text(
-                  '42',
-                  style: AppTextStyles.recoletaH1Regular,
+                AnimatedScale(
+                  duration: kThemeAnimationDuration * 2,
+                  scale: _getScale(state),
+                  child: AnimatedOpacity(
+                    duration: kThemeAnimationDuration,
+                    opacity: _getOpacity(state),
+                    child: AnimatedDigitWidget(
+                      duration: const Duration(milliseconds: 2000),
+                      value: _getAge(state),
+                      textStyle: AppTextStyles.recoletaH1Regular,
+                    ),
+                  ),
                 ),
                 const SizedBox(
                   height: 40,
                 ),
-                Text(
-                  'Jahre alt!',
-                  style: AppTextStyles.robotoH5SemiBold.copyWith(
-                    color: Palette.beige,
+                AnimatedOpacity(
+                  duration: kThemeAnimationDuration,
+                  opacity: _getOpacity(state),
+                  child: Text(
+                    'Jahre alt!',
+                    style: AppTextStyles.robotoH5SemiBold.copyWith(
+                      color: Palette.beige,
+                    ),
                   ),
                 ),
               ],
             ),
           ],
         );
+      },
+    );
+  }
+
+  int _getAge(HomeState state) {
+    return state.maybeWhen(
+      success: (age) {
+        return age;
+      },
+      orElse: () {
+        return 0;
+      },
+    );
+  }
+
+  bool _getAnimate(HomeState state) {
+    return state.when(
+      idle: () {
+        return false;
+      },
+      loading: () {
+        return true;
+      },
+      success: (age) {
+        return false;
+      },
+      error: (message) {
+        return false;
+      },
+    );
+  }
+
+  double _getScale(HomeState state) {
+    return state.when(
+      idle: () {
+        return 0;
+      },
+      loading: () {
+        return 0;
+      },
+      success: (age) {
+        return 1;
+      },
+      error: (message) {
+        return 0;
+      },
+    );
+  }
+
+  double _getOpacity(HomeState state) {
+    return state.when(
+      idle: () {
+        return 0;
+      },
+      loading: () {
+        return 0;
+      },
+      success: (age) {
+        return 1;
+      },
+      error: (message) {
+        return 0;
       },
     );
   }

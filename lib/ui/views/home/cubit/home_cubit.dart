@@ -21,7 +21,7 @@ class HomeCubit extends Cubit<HomeState> {
       emit(const HomeState.loading());
 
       final int age = await _agifyApi.getAgeFromName(
-        name: 'Tom',
+        name: name,
         countryCode: countryCode,
       );
 
@@ -33,5 +33,9 @@ class HomeCubit extends Cubit<HomeState> {
         ),
       );
     }
+  }
+
+  void reset() {
+    emit(const HomeState.idle());
   }
 }

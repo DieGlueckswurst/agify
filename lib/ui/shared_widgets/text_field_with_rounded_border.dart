@@ -1,5 +1,8 @@
 import 'package:agify/constants/palette.dart';
+import 'package:agify/shared_utils/dismiss_keyboard.dart';
 import 'package:agify/shared_utils/wait.dart';
+import 'package:agify/ui/shared_widgets/animated_widgets/tappable_scale.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -9,6 +12,7 @@ import '../../constants/transition_duration.dart';
 class TextFieldWithRoundedBorder extends StatefulWidget {
   final String? hintText;
   final bool focusOnInit;
+  final bool showClearButton;
   final Function(String) onChanged;
   final Function(String?)? onSubmit;
 
@@ -18,6 +22,7 @@ class TextFieldWithRoundedBorder extends StatefulWidget {
     required this.focusOnInit,
     required this.onChanged,
     required this.onSubmit,
+    this.showClearButton = true,
   }) : super(key: key);
 
   @override
@@ -28,6 +33,7 @@ class TextFieldWithRoundedBorder extends StatefulWidget {
 class _TextFieldWithRoundedBorderState
     extends State<TextFieldWithRoundedBorder> {
   final FocusNode _focusNode = FocusNode();
+  final TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
@@ -45,7 +51,13 @@ class _TextFieldWithRoundedBorderState
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      onFieldSubmitted: widget.onSubmit,
+      onFieldSubmitted: (text) {
+        dismissKeyboard();
+        if (widget.onSubmit != null) {
+          widget.onSubmit!(text);
+        }
+      },
+      controller: _controller,
       textCapitalization: TextCapitalization.characters,
       inputFormatters: [
         // Disable white characters
@@ -64,9 +76,20 @@ class _TextFieldWithRoundedBorderState
         focusedBorder: _border,
         border: _border,
         disabledBorder: _border,
+        suffixIcon: widget.showClearButton && _controller.text.isNotEmpty
+            ? TappableScale(onTap: () {
+                _controller.text = '';
+                widget.onChanged('');
+              }, builder: (context, isTapped) {
+                return const Icon(
+                  CupertinoIcons.multiply_circle_fill,
+                  color: Palette.black,
+                );
+              })
+            : null,
       ),
       autocorrect: false,
-      style: AppTextStyles.robotoH5Regular,
+      style: AppTextStyles.robotoH5SemiBold,
       textAlign: TextAlign.center,
       onChanged: widget.onChanged,
       focusNode: _focusNode,

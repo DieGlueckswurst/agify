@@ -26,7 +26,7 @@ class App extends StatelessWidget {
         providers: [
           BlocProvider(
             create: (_) => HomeCubit(
-              agifyApi: context.read<AgifyApi>(),
+              agifyApi: agifyApi,
             ),
           ),
         ],

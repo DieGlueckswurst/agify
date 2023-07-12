@@ -8,6 +8,10 @@ extension ExceptionMapper on Exception {
     if (e is ApiException && e.cause == ApiExceptionCause.noConnection) {
       return 'Bitte überprüfen Sie Ihre Internetverbindung und versuchen Sie es erneut.';
     }
+
+    if (e is ApiException && e.cause == ApiExceptionCause.notFound) {
+      return 'Ups! Dein Name scheint so selten zu sein, dass er sich lieber außerhalb unserer Datenbank versteckt.';
+    }
     return 'Etwas ist schief gelaufen!';
   }
 }

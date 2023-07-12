@@ -23,7 +23,7 @@ class AppTextStyles {
 
   static TextStyle robotoH5Regular = const TextStyle(
     fontFamily: FontFamily.roboto,
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w400,
     color: Palette.black,
     fontSize: 17,
   );

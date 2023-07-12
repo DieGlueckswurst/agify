@@ -1,4 +1,5 @@
 import 'package:agify/data/backend/api_base.dart/api_client.dart';
+import 'package:agify/data/backend/api_base.dart/api_exeption.dart';
 
 class AgifyApi {
   final ApiClient _apiClient;
@@ -28,8 +29,9 @@ class AgifyApi {
     int? age = int.tryParse(response['age'].toString());
 
     if (age == null) {
-      throw Exception(
-        'Für diesen Namen konnte kein Alter herausgefunden werden...',
+      throw ApiException(
+        cause: ApiExceptionCause.notFound,
+        body: 'Für diesen Namen konnte kein Alter herausgefunden werden.',
       );
     }
 
