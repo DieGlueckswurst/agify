@@ -20,40 +20,38 @@ class _HomeViewState extends State<HomeView> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Column(
-          children: <Widget>[
-            const Expanded(
-              flex: 1,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  AgeDisplay(),
-                ],
+        body: SafeArea(
+          bottom: false,
+          child: Column(
+            children: <Widget>[
+              const Expanded(
+                flex: 1,
+                child: AgeDisplay(),
               ),
-            ),
-            Expanded(
-              flex: 2,
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Palette.beige,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
+              Expanded(
+                flex: 2,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    color: Palette.beige,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
+                    ),
+                  ),
+                  child: const Column(
+                    children: [
+                      SizedBox(
+                        height: 32,
+                      ),
+                      Center(
+                        child: NameInput(),
+                      ),
+                    ],
                   ),
                 ),
-                child: const Column(
-                  children: [
-                    SizedBox(
-                      height: 32,
-                    ),
-                    Center(
-                      child: NameInput(),
-                    ),
-                  ],
-                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

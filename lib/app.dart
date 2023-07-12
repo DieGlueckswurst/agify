@@ -16,31 +16,24 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiRepositoryProvider(
+    return MultiBlocProvider(
       providers: [
-        RepositoryProvider.value(
-          value: agifyApi,
+        BlocProvider(
+          create: (_) => HomeCubit(
+            agifyApi: agifyApi,
+          ),
         ),
       ],
-      child: MultiBlocProvider(
-        providers: [
-          BlocProvider(
-            create: (_) => HomeCubit(
-              agifyApi: agifyApi,
-            ),
+      child: MaterialApp(
+        title: 'agify',
+        theme: ThemeData(
+          fontFamily: FontFamily.roboto,
+          primarySwatch: ColorService.createMaterialColor(
+            Palette.black,
           ),
-        ],
-        child: MaterialApp(
-          title: 'agify',
-          theme: ThemeData(
-            fontFamily: FontFamily.roboto,
-            primarySwatch: ColorService.createMaterialColor(
-              Palette.black,
-            ),
-            scaffoldBackgroundColor: Palette.brown,
-          ),
-          home: const HomeView(),
+          scaffoldBackgroundColor: Palette.brown,
         ),
+        home: const HomeView(),
       ),
     );
   }

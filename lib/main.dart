@@ -9,11 +9,11 @@ void main() {
     client: Dio(),
   );
 
-  final agifyApy = AgifyApi(apiClient: apiClient);
+  final agifyApi = AgifyApi(apiClient: apiClient);
 
   runApp(
     App(
-      agifyApi: agifyApy,
+      agifyApi: agifyApi,
     ),
   );
 }

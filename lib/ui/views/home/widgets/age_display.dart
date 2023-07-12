@@ -28,6 +28,7 @@ class AgeDisplay extends StatelessWidget {
               height: 150,
             ),
             Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 AnimatedOpacity(
                   duration: kThemeAnimationDuration,
