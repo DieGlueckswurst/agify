@@ -1,4 +1,3 @@
-import 'package:animated_digit/animated_digit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -8,15 +7,18 @@ import '../../../../constants/text_styles.dart';
 import '../../../../gen/assets.gen.dart';
 import '../cubit/home_cubit.dart';
 
-class AgeDisplay extends StatelessWidget {
+class AgeDisplay extends StatefulWidget {
   const AgeDisplay({super.key});
 
   @override
+  State<AgeDisplay> createState() => _AgeDisplayState();
+}
+
+class _AgeDisplayState extends State<AgeDisplay> {
+  int _currentAge = 0;
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<HomeCubit, HomeState>(
-      buildWhen: (previous, current) {
-        return previous != current;
-      },
       builder: (context, state) {
         return Stack(
           alignment: Alignment.center,
@@ -49,10 +51,9 @@ class AgeDisplay extends StatelessWidget {
                   child: AnimatedOpacity(
                     duration: kThemeAnimationDuration,
                     opacity: _getOpacity(state),
-                    child: AnimatedDigitWidget(
-                      duration: const Duration(milliseconds: 2000),
-                      value: _getAge(state),
-                      textStyle: AppTextStyles.recoletaH1Regular,
+                    child: Text(
+                      _getAge(state).toString(),
+                      style: AppTextStyles.recoletaH1Regular,
                     ),
                   ),
                 ),
@@ -77,13 +78,14 @@ class AgeDisplay extends StatelessWidget {
     );
   }
 
-  int _getAge(HomeState state) {
+  _getAge(HomeState state) {
     return state.maybeWhen(
       success: (age) {
+        _currentAge = age;
         return age;
       },
       orElse: () {
-        return 0;
+        return _currentAge;
       },
     );
   }

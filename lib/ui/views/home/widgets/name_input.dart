@@ -1,3 +1,4 @@
+import 'package:agify/shared_utils/dismiss_keyboard.dart';
 import 'package:agify/ui/views/home/widgets/error_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -69,6 +70,7 @@ class _NameInputState extends State<NameInput> {
                   isEnabled: true,
                   isLoading: state == const HomeState.loading(),
                   onTap: () async {
+                    dismissKeyboard();
                     _getAge(
                       name: _name,
                       countryCode: Localizations.localeOf(context).countryCode,

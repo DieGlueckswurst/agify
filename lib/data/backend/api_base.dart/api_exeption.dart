@@ -42,7 +42,7 @@ class ApiException implements Exception {
 
   ApiException({
     required this.cause,
-    required this.body,
+    this.body,
   });
 
   factory ApiException.fromDioError(DioException err) {

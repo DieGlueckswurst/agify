@@ -31,7 +31,6 @@ class AgifyApi {
     if (age == null) {
       throw ApiException(
         cause: ApiExceptionCause.notFound,
-        body: 'Für diesen Namen konnte kein Alter herausgefunden werden.',
       );
     }
 
